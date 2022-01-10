@@ -1,15 +1,18 @@
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 export default function Wallpaper() {
   return (
-    <Image
+    <View
       style={{
         ...StyleSheet.absoluteFillObject,
         zIndex: -1,
       }}
-      resizeMode="cover"
-      resizeMethod="resize"
-      source={require("../assets/img/wallpaper.jpg")}
-    />
+    >
+      <Image
+        resizeMode="contain"
+        source={require("../assets/img/wallpaper.jpg")}
+        style={{ height: "100%", width: "100%", backgroundColor: "red" }}
+      />
+    </View>
   );
 }
