@@ -9,21 +9,19 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <AppGroup />
-        <AppItem />
-        <AppItem />
-        <AppItem />
-      </View>
-      <View style={styles.row}>
-        {Object.keys(apps.home).map((item, index) => {
-          return <AppItem key={`app-${item}-${index}`} {...apps.home[item]} />;
+        {apps.home.row1.map((item) => {
+          return <AppItem key={`app-${item.title}`} {...item} />;
         })}
       </View>
       <View style={styles.row}>
-        <AppItem />
-        <AppItem />
-        <AppItem />
-        <AppItem />
+        {apps.home.row2.map((item) => {
+          return <AppItem key={`app-${item.title}`} {...item} />;
+        })}
+      </View>
+      <View style={styles.row}>
+        {apps.home.row3.map((item) => {
+          return <AppItem key={`app-${item.title}`} {...item} />;
+        })}
       </View>
     </View>
   );
