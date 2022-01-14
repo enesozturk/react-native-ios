@@ -4,26 +4,29 @@ import apps from "../constants/apps";
 
 import AppGroup from "./AppGroup";
 import AppItem from "./AppItem";
+import SwipeablePage from "./SwipeablePage";
 
 export default function Home() {
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        {apps.home.row1.map((item) => {
-          return <AppItem key={`app-${item.title}`} {...item} />;
-        })}
+    <SwipeablePage>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          {apps.home.row1.map((item) => {
+            return <AppItem key={`app-${item.title}`} {...item} />;
+          })}
+        </View>
+        <View style={styles.row}>
+          {apps.home.row2.map((item) => {
+            return <AppItem key={`app-${item.title}`} {...item} />;
+          })}
+        </View>
+        <View style={styles.row}>
+          {apps.home.row3.map((item) => {
+            return <AppItem key={`app-${item.title}`} {...item} />;
+          })}
+        </View>
       </View>
-      <View style={styles.row}>
-        {apps.home.row2.map((item) => {
-          return <AppItem key={`app-${item.title}`} {...item} />;
-        })}
-      </View>
-      <View style={styles.row}>
-        {apps.home.row3.map((item) => {
-          return <AppItem key={`app-${item.title}`} {...item} />;
-        })}
-      </View>
-    </View>
+    </SwipeablePage>
   );
 }
 

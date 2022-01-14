@@ -10,8 +10,14 @@ import AppItem from "./AppItem";
 export default function Footer() {
   return (
     <BlurView intensity={100} style={styles.container}>
-      {Object.keys(apps.footer).map((item) => {
-        return <AppItem noTitle icon={apps.footer[item].icon} />;
+      {Object.keys(apps.footer).map((item, index) => {
+        return (
+          <AppItem
+            key={`footer-app-${item.title}-${index}`}
+            noTitle
+            icon={apps.footer[item].icon}
+          />
+        );
       })}
     </BlurView>
   );
