@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 
 import { BlurView } from "expo-blur";
 import { TapGestureHandler } from "react-native-gesture-handler";
@@ -81,6 +81,7 @@ export default function AnimatedProvider({
   const handleTapOutside = () => {
     isSearchActive.value = 0;
     offsetY.value = withSpring(0, SPRING_CONFIG);
+    Keyboard.dismiss();
   };
 
   return (
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: theme.colors.black.black75,
   },
   blurBackdrop: {
     width: SCREEN_WIDTH,

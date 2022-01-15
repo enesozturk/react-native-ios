@@ -1,8 +1,22 @@
 export default {
-  colors: {},
+  colors: {
+    white: {
+      white100: "rgba(255, 255, 255, 1)",
+      white75: "rgba(255, 255, 255, 0.75)",
+      white50: "rgba(255, 255, 255, 0.5)",
+      white25: "rgba(255, 255, 255, 0.25)",
+      white15: "rgba(255, 255, 255, 0.15)",
+    },
+    black: {
+      black100: "rgba(0, 0, 0, 1)",
+      black75: "rgba(0, 0, 0, 0.75)",
+      black50: "rgba(0, 0, 0, 0.5)",
+      black25: "rgba(0, 0, 0, 0.25)",
+    },
+  },
   spacing: {
     xs: 4,
-    sm: 8,
+    sm: 7,
     md: 16,
     lg: 24,
     xl: 32,
