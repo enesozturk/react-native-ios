@@ -88,7 +88,7 @@ export default function AnimatedProvider({
     <>
       <Animated.View style={[styles.backdrop, animatedBackdropStyles]} />
       <AnimatedBlurView
-        tint="default"
+        tint="dark"
         animatedProps={animatedBlurBackdropProps}
         style={[styles.blurBackdrop, animatedBlurBackdropStyles]}
       >
