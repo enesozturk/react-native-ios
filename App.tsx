@@ -1,27 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import Wallpaper from "./src/components/Wallpaper";
-import Home from "./src/components/Home";
-import Footer from "./src/components/Footer";
+import Wallpaper from "@react-native-ios/components/Wallpaper";
+import Footer from "@react-native-ios/components/Footer/Footer";
+import Home from "@react-native-ios/screens/Home";
+import SwipeableProvider from "@react-native-ios/components/SwipeableProvider";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
+    <SafeAreaProvider>
+      <StatusBar style="light" />
       <Wallpaper />
-      <Home />
+      <SwipeableProvider>
+        <Home />
+      </SwipeableProvider>
       <Footer />
-    </View>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

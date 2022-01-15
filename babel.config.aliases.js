@@ -1,0 +1,16 @@
+module.exports = {
+  "@react-native-ios/api": "./src/api",
+  "@react-native-ios/assets": "./src/assets",
+  "@react-native-ios/components": "./src/components",
+  "@react-native-ios/config": "./src/config",
+  "@react-native-ios/constants": "./src/constants",
+  "@react-native-ios/helpers": "./src/helpers",
+  "@react-native-ios/hooks": "./src/hooks",
+  "@react-native-ios/navigators": "./src/navigators",
+  "@react-native-ios/providers": "./src/providers",
+  "@react-native-ios/screens": "./src/screens",
+  "@react-native-ios/store": "./src/store",
+  "@react-native-ios/storybook": "./src/storybook",
+  "@react-native-ios/translations": "./src/translations",
+  "@react-native-ios/utils": "./src/utils",
+};

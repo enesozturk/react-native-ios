@@ -1,6 +1,24 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@react-native-ios/api/*": ["./api/*"],
+      "@react-native-ios/assets/*": ["./assets/*"],
+      "@react-native-ios/config/*": ["./config/*"],
+      "@react-native-ios/constants/*": ["./constants/*"],
+      "@react-native-ios/components/*": ["./components/*"],
+      "@react-native-ios/helpers/*": ["./helpers/*"],
+      "@react-native-ios/hooks/*": ["./hooks/*"],
+      "@react-native-ios/jest/*": ["./jest/*"],
+      "@react-native-ios/navigators/*": ["./navigators/*"],
+      "@react-native-ios/providers/*": ["./providers/*"],
+      "@react-native-ios/screens/*": ["./screens/*"],
+      "@react-native-ios/store/*": ["./store/*"],
+      "@react-native-ios/storybook/*": ["./storybook/*"],
+      "@react-native-ios/translations/*": ["./translations/*"],
+      "@react-native-ios/utils/*": ["./utils/*"]
+    }
   }
 }

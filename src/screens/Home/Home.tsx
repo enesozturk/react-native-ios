@@ -1,8 +1,7 @@
 import { StyleSheet, View } from "react-native";
 
-import apps from "../constants/apps";
-
-import AppItem from "../components/AppItem";
+import AppItem from "@react-native-ios/components/AppItem";
+import apps from "@react-native-ios/constants/apps";
 
 export default function Home() {
   return (
@@ -32,7 +31,6 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    marginTop: 64,
   },
   row: {
     display: "flex",
