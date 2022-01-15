@@ -54,7 +54,7 @@ export default function Search({ isSearchActive, offsetY }: SearchProps) {
           })}
         </View>
         <View style={[styles.row, { marginBottom: 24 }]}>
-          {apps.home.row2.map((item) => {
+          {apps.home.row1.map((item) => {
             return <AppItem key={`app-${item.title}`} {...item} />;
           })}
         </View>
