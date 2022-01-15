@@ -1,5 +1,5 @@
 import { PanGestureHandlerEventPayload } from "react-native-gesture-handler";
-import { SharedValue, withSpring, withTiming } from "react-native-reanimated";
+import { SharedValue, withSpring } from "react-native-reanimated";
 
 import {
   DISTANCE_TO_ACTIVATE,
@@ -50,7 +50,11 @@ export const handleGestureOnEnd = ({
     // offsetYSearch.value = withTiming(MAX_OFFSET_TO_ANIMATE, {
     //   duration: 300,
     // });
-    offsetY.value = withTiming(MAX_OFFSET_TO_ANIMATE, { duration: 300 });
+    offsetY.value = withSpring(MAX_OFFSET_TO_ANIMATE, {
+      ...SPRING_CONFIG,
+      stiffness: 100,
+      velocity: e.velocityY,
+    });
   } else if (e.translationY >= DISTANCE_TO_ACTIVATE) {
     isSearchActive.value = 1;
     offsetY.value = withSpring(MAX_OFFSET_TO_ANIMATE, SPRING_CONFIG);

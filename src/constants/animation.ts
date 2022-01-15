@@ -4,10 +4,10 @@ export const DISTANCE_TO_ACTIVATE = MAX_OFFSET_TO_ANIMATE / 2;
 export const MIN_VELOCITY_Y_TO_ACTIVATE = 200;
 
 export const SPRING_CONFIG = {
-  damping: 500,
   stiffness: 1000,
+  damping: 500,
   mass: 3,
-  overshootClamping: true,
+  overshootClamping: false,
   restDisplacementThreshold: 10,
   restSpeedThreshold: 10,
 };
