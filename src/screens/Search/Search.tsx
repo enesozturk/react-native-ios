@@ -46,7 +46,6 @@ export default function Search({ isSearchActive, offsetY }: SearchProps) {
       <View style={styles.titleSectionContainer}>
         <Text style={styles.titleText}>Siri Suggestions</Text>
         <ChevronRightSVG width={6} stroke={theme.colors.white.white50} />
-        {/* <Text style={styles.showMoreText}>Show More</Text> */}
       </View>
       <View style={styles.appsContainer}>
         <View style={styles.row}>
