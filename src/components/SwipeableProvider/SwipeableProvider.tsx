@@ -15,15 +15,15 @@ import {
   handleGestureOnUpdate,
   MAX_TX_VALUE,
   MIN_TX_VALUE,
-  SNAP_POINTS_X,
+  SNAP_POINTS_HORIZONTAL,
 } from "./SwipeablePage.utils";
 
 import Search from "@react-native-ios/screens/Search";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@react-native-ios/constants/ui";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "@react-native-ios/constants/theme";
-import RightSearch from "./RightSearch";
-import LeftSearch from "./LeftSearch";
+import RightSearch from "@react-native-ios/screens/Search/RightSearch";
+import LeftSearch from "@react-native-ios/screens/Search/LeftSearch";
 
 type SwipeableProviderProps = {
   pages: React.ReactNode[];
@@ -51,13 +51,19 @@ export default function SwipeableProvider({ pages }: SwipeableProviderProps) {
             offsetX.value > 0
               ? interpolate(
                   offsetX.value,
-                  [SNAP_POINTS_X[2] * -1, SNAP_POINTS_X[0]],
+                  [
+                    SNAP_POINTS_HORIZONTAL.LEFT_PAGE,
+                    SNAP_POINTS_HORIZONTAL.ORIGIN,
+                  ],
                   [0.85, 1],
                   Extrapolate.CLAMP
                 )
               : interpolate(
                   offsetX.value,
-                  [SNAP_POINTS_X[2], SNAP_POINTS_X[4]],
+                  [
+                    SNAP_POINTS_HORIZONTAL.SECOND_PAGE,
+                    SNAP_POINTS_HORIZONTAL.RIGHT_PAGE,
+                  ],
                   [1, 0.85],
                   Extrapolate.CLAMP
                 ),

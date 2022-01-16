@@ -23,6 +23,16 @@ type GestureHandlerProps = {
   offsetX: SharedValue<number>;
 };
 
+export const SNAP_POINTS_HORIZONTAL = {
+  LEFT_PAGE: SCREEN_WIDTH,
+  LEFT_PAGE_HALF: SCREEN_WIDTH / 2,
+  ORIGIN: 0,
+  FIRST_PAGE_HALF: SCREEN_WIDTH / -2,
+  SECOND_PAGE: SCREEN_WIDTH * -1,
+  SECOND_PAGE_HALF: (SCREEN_WIDTH * -3) / 2,
+  RIGHT_PAGE: SCREEN_WIDTH * -2,
+};
+
 export const SNAP_POINTS_X = [
   0,
   SCREEN_WIDTH / -2,
@@ -30,8 +40,8 @@ export const SNAP_POINTS_X = [
   (SCREEN_WIDTH * -3) / 2,
   SCREEN_WIDTH * -2,
 ];
-export const MIN_TX_VALUE = SNAP_POINTS_X[2];
-export const MAX_TX_VALUE = SNAP_POINTS_X[0];
+export const MIN_TX_VALUE = SNAP_POINTS_HORIZONTAL.SECOND_PAGE;
+export const MAX_TX_VALUE = SNAP_POINTS_HORIZONTAL.ORIGIN;
 
 export const handleGestureOnStart = ({
   e,
@@ -74,18 +84,40 @@ export const handleGestureOnEnd = ({
     // Left Right Page Calculations
     const tX = e.translationX + startX.value;
 
-    if (tX > SNAP_POINTS_X[1] && tX < SNAP_POINTS_X[1] * -1) {
-      offsetX.value = withTiming(SNAP_POINTS_X[0], { duration: 300 });
-      startX.value = withTiming(SNAP_POINTS_X[0], { duration: 300 });
-    } else if (tX < SNAP_POINTS_X[3] && tX > SNAP_POINTS_X[4]) {
-      offsetX.value = withTiming(SNAP_POINTS_X[4], { duration: 300 });
-      startX.value = withTiming(SNAP_POINTS_X[4], { duration: 300 });
-    } else if (tX > SNAP_POINTS_X[1] * -1) {
-      offsetX.value = withTiming(SNAP_POINTS_X[2] * -1, { duration: 300 });
-      startX.value = withTiming(SNAP_POINTS_X[2] * -1, { duration: 300 });
+    if (
+      tX > SNAP_POINTS_HORIZONTAL.FIRST_PAGE_HALF &&
+      tX < SNAP_POINTS_HORIZONTAL.LEFT_PAGE_HALF
+    ) {
+      offsetX.value = withTiming(SNAP_POINTS_HORIZONTAL.ORIGIN, {
+        duration: 300,
+      });
+      startX.value = withTiming(SNAP_POINTS_HORIZONTAL.ORIGIN, {
+        duration: 300,
+      });
+    } else if (
+      tX < SNAP_POINTS_HORIZONTAL.SECOND_PAGE_HALF &&
+      tX > SNAP_POINTS_HORIZONTAL.RIGHT_PAGE
+    ) {
+      offsetX.value = withTiming(SNAP_POINTS_HORIZONTAL.RIGHT_PAGE, {
+        duration: 300,
+      });
+      startX.value = withTiming(SNAP_POINTS_HORIZONTAL.RIGHT_PAGE, {
+        duration: 300,
+      });
+    } else if (tX > SNAP_POINTS_HORIZONTAL.LEFT_PAGE_HALF) {
+      offsetX.value = withTiming(SNAP_POINTS_HORIZONTAL.SECOND_PAGE * -1, {
+        duration: 300,
+      });
+      startX.value = withTiming(SNAP_POINTS_HORIZONTAL.SECOND_PAGE * -1, {
+        duration: 300,
+      });
     } else {
-      offsetX.value = withTiming(SNAP_POINTS_X[2], { duration: 300 });
-      startX.value = withTiming(SNAP_POINTS_X[2], { duration: 300 });
+      offsetX.value = withTiming(SNAP_POINTS_HORIZONTAL.SECOND_PAGE, {
+        duration: 300,
+      });
+      startX.value = withTiming(SNAP_POINTS_HORIZONTAL.SECOND_PAGE, {
+        duration: 300,
+      });
     }
   } else {
     // Search Page Calculations

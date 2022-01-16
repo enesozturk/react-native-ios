@@ -2,7 +2,11 @@ import React from "react";
 import { Keyboard, StyleSheet, View } from "react-native";
 
 import { BlurView } from "expo-blur";
-import { TapGestureHandler } from "react-native-gesture-handler";
+import {
+  Gesture,
+  GestureDetector,
+  TapGestureHandler,
+} from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -20,7 +24,8 @@ import {
   SPRING_CONFIG,
 } from "@react-native-ios/constants/animation";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@react-native-ios/constants/ui";
-import { SNAP_POINTS_X } from "./SwipeablePage.utils";
+import { SNAP_POINTS_HORIZONTAL } from "@react-native-ios/components/SwipeableProvider/SwipeablePage.utils";
+import LeftSearchContent from "./components/LeftSearchContent";
 
 type AnimatedProviderProps = {
   offsetX: SharedValue<number>;
@@ -37,7 +42,7 @@ export default function LeftSearch({
 
   const animatedBlurBackdropStyles = useAnimatedStyle(() => {
     return {
-      zIndex: offsetX.value > SNAP_POINTS_X[0] ? 10 : -1,
+      zIndex: offsetX.value > SNAP_POINTS_HORIZONTAL.ORIGIN ? 10 : -1,
     };
   });
 
@@ -47,8 +52,8 @@ export default function LeftSearch({
         {
           translateX: interpolate(
             offsetX.value,
-            [SNAP_POINTS_X[0], SNAP_POINTS_X[2] * -1],
-            [SNAP_POINTS_X[2], SNAP_POINTS_X[0]],
+            [SNAP_POINTS_HORIZONTAL.ORIGIN, SNAP_POINTS_HORIZONTAL.LEFT_PAGE],
+            [SNAP_POINTS_HORIZONTAL.SECOND_PAGE, SNAP_POINTS_HORIZONTAL.ORIGIN],
             Extrapolate.CLAMP
           ),
         },
@@ -60,7 +65,7 @@ export default function LeftSearch({
     return {
       intensity: interpolate(
         offsetX.value,
-        [SNAP_POINTS_X[0], SNAP_POINTS_X[2] * -1],
+        [SNAP_POINTS_HORIZONTAL.ORIGIN, SNAP_POINTS_HORIZONTAL.LEFT_PAGE],
         [0, BLUR_VIEW_MAX_INTENSITY],
         Extrapolate.CLAMP
       ),
@@ -68,10 +73,28 @@ export default function LeftSearch({
   });
 
   const handleTapOutside = () => {
-    offsetX.value = withSpring(SNAP_POINTS_X[0], SPRING_CONFIG);
-    startX.value = withSpring(SNAP_POINTS_X[0], SPRING_CONFIG);
+    offsetX.value = withSpring(SNAP_POINTS_HORIZONTAL.ORIGIN, SPRING_CONFIG);
+    startX.value = withSpring(SNAP_POINTS_HORIZONTAL.ORIGIN, SPRING_CONFIG);
     Keyboard.dismiss();
   };
+
+  const gesture = Gesture.Pan()
+    .onUpdate((e) => {
+      offsetX.value = SNAP_POINTS_HORIZONTAL.LEFT_PAGE + e.translationX;
+    })
+    .onEnd((e) => {
+      if (e.translationX < SNAP_POINTS_HORIZONTAL.FIRST_PAGE_HALF) {
+        offsetX.value = startX.value = withSpring(
+          SNAP_POINTS_HORIZONTAL.ORIGIN,
+          SPRING_CONFIG
+        );
+      } else {
+        offsetX.value = startX.value = withSpring(
+          SNAP_POINTS_HORIZONTAL.LEFT_PAGE,
+          SPRING_CONFIG
+        );
+      }
+    });
 
   return (
     <>
@@ -80,13 +103,15 @@ export default function LeftSearch({
         animatedProps={animatedBlurBackdropProps}
         style={[styles.blurBackdrop, animatedBlurBackdropStyles]}
       >
-        <TapGestureHandler numberOfTaps={1} onEnded={handleTapOutside}>
-          <Animated.View
-            style={[styles.contentContainer, animatedContentStyles]}
-          >
-            {children}
-          </Animated.View>
-        </TapGestureHandler>
+        <GestureDetector gesture={gesture}>
+          <TapGestureHandler numberOfTaps={1} onEnded={handleTapOutside}>
+            <Animated.View
+              style={[styles.contentContainer, animatedContentStyles]}
+            >
+              <LeftSearchContent />
+            </Animated.View>
+          </TapGestureHandler>
+        </GestureDetector>
       </AnimatedBlurView>
     </>
   );
@@ -103,7 +128,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     paddingHorizontal: 8,
-    backgroundColor: "red",
   },
   blurBackdrop: {
     width: SCREEN_WIDTH,

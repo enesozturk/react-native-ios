@@ -17,12 +17,11 @@ const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 
 import {
   BLUR_VIEW_MAX_INTENSITY,
-  MAX_OFFSET_TO_ANIMATE,
   SPRING_CONFIG,
 } from "@react-native-ios/constants/animation";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@react-native-ios/constants/ui";
 import theme from "@react-native-ios/constants/theme";
-import { SNAP_POINTS_X } from "./SwipeablePage.utils";
+import { SNAP_POINTS_HORIZONTAL } from "@react-native-ios/components/SwipeableProvider/SwipeablePage.utils";
 
 type AnimatedProviderProps = {
   offsetX: SharedValue<number>;
@@ -39,7 +38,7 @@ export default function RightSearch({
 
   const animatedBlurBackdropStyles = useAnimatedStyle(() => {
     return {
-      zIndex: offsetX.value < SNAP_POINTS_X[2] ? 10 : -1,
+      zIndex: offsetX.value < SNAP_POINTS_HORIZONTAL.SECOND_PAGE ? 10 : -1,
     };
   });
 
@@ -49,8 +48,11 @@ export default function RightSearch({
         {
           translateX: interpolate(
             offsetX.value,
-            [SNAP_POINTS_X[2], SNAP_POINTS_X[4]],
-            [SNAP_POINTS_X[2] * -1, SNAP_POINTS_X[0] * -1],
+            [
+              SNAP_POINTS_HORIZONTAL.SECOND_PAGE,
+              SNAP_POINTS_HORIZONTAL.RIGHT_PAGE,
+            ],
+            [SNAP_POINTS_HORIZONTAL.LEFT_PAGE, SNAP_POINTS_HORIZONTAL.ORIGIN],
             Extrapolate.CLAMP
           ),
         },
@@ -62,29 +64,25 @@ export default function RightSearch({
     return {
       intensity: interpolate(
         offsetX.value,
-        [SNAP_POINTS_X[2], SNAP_POINTS_X[3]],
+        [
+          SNAP_POINTS_HORIZONTAL.SECOND_PAGE,
+          SNAP_POINTS_HORIZONTAL.SECOND_PAGE_HALF,
+        ],
         [0, BLUR_VIEW_MAX_INTENSITY],
         Extrapolate.CLAMP
       ),
     };
   });
 
-  //   const animatedContentStyles = useAnimatedStyle(
-  //     () => ({
-  //       opacity: interpolate(
-  //         offsetX.value,
-  //         [MAX_OFFSET_TO_ANIMATE / 10, MAX_OFFSET_TO_ANIMATE / 2],
-  //         [0, 1],
-  //         Extrapolate.CLAMP
-  //       ),
-  //       transform: [{ translateY: offsetX.value - MAX_OFFSET_TO_ANIMATE }],
-  //     }),
-  //     [offsetX]
-  //   );
-
   const handleTapOutside = () => {
-    offsetX.value = withSpring(SNAP_POINTS_X[2], SPRING_CONFIG);
-    startX.value = withSpring(SNAP_POINTS_X[2], SPRING_CONFIG);
+    offsetX.value = withSpring(
+      SNAP_POINTS_HORIZONTAL.SECOND_PAGE,
+      SPRING_CONFIG
+    );
+    startX.value = withSpring(
+      SNAP_POINTS_HORIZONTAL.SECOND_PAGE,
+      SPRING_CONFIG
+    );
     Keyboard.dismiss();
   };
 
@@ -118,7 +116,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     paddingHorizontal: 8,
-    backgroundColor: "red",
   },
   blurBackdrop: {
     width: SCREEN_WIDTH,
