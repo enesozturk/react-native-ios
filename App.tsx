@@ -6,6 +6,7 @@ import Footer from "@react-native-ios/components/Footer/Footer";
 import Home from "@react-native-ios/screens/Home";
 import SwipeableProvider from "@react-native-ios/components/SwipeableProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Page1, Page2 } from "@react-native-ios/screens/Home/Home";
 
 export default function App() {
   return (
@@ -13,9 +14,7 @@ export default function App() {
       <SafeAreaProvider>
         <StatusBar style="light" />
         <Wallpaper />
-        <SwipeableProvider>
-          <Home />
-        </SwipeableProvider>
+        <SwipeableProvider pages={[<Page1 />, <Page2 />]} />
         <Footer />
       </SafeAreaProvider>
     </GestureHandlerRootView>
