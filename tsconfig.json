@@ -6,7 +6,7 @@
     "paths": {
       "@react-native-ios/api/*": ["./api/*"],
       "@react-native-ios/assets/*": ["./assets/*"],
-      "@react-native-ios/config/*": ["./config/*"],
+      "@react-native-ios/configs/*": ["./configs/*"],
       "@react-native-ios/constants/*": ["./constants/*"],
       "@react-native-ios/components/*": ["./components/*"],
       "@react-native-ios/helpers/*": ["./helpers/*"],

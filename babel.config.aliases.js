@@ -2,7 +2,7 @@ module.exports = {
   "@react-native-ios/api": "./src/api",
   "@react-native-ios/assets": "./src/assets",
   "@react-native-ios/components": "./src/components",
-  "@react-native-ios/config": "./src/config",
+  "@react-native-ios/configs": "./src/configs",
   "@react-native-ios/constants": "./src/constants",
   "@react-native-ios/helpers": "./src/helpers",
   "@react-native-ios/hooks": "./src/hooks",
