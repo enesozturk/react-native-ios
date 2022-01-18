@@ -22,9 +22,9 @@ const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 import {
   BLUR_VIEW_MAX_INTENSITY,
   SPRING_CONFIG,
+  SNAP_POINTS_HORIZONTAL,
 } from "@react-native-ios/constants/animation";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@react-native-ios/constants/ui";
-import { SNAP_POINTS_HORIZONTAL } from "@react-native-ios/components/SwipeableProvider/SwipeablePage.utils";
 import LeftSearchContent from "./components/LeftSearchContent";
 
 type AnimatedProviderProps = {
@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    paddingHorizontal: 8,
   },
   blurBackdrop: {
     width: SCREEN_WIDTH,
