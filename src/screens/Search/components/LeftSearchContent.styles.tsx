@@ -7,6 +7,7 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: theme.spacing.lg - theme.spacing.sm,
   },
   searchInputContainer: {
@@ -31,7 +32,6 @@ export default StyleSheet.create({
   searchInput: {
     paddingHorizontal: theme.spacing.sm,
     color: theme.colors.white.white75,
-    backgroundColor: "red",
     ...theme.font.body,
   },
   cancelButton: {
@@ -47,7 +47,8 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     padding: theme.spacing.lg + 4,
-    paddingHorizontal: theme.spacing.lg - theme.spacing.sm,
+    paddingHorizontal: 56 / 2 - 8,
+    paddingTop: 0,
     width: "100%",
     backgroundColor: "transparent",
     overflow: "hidden",

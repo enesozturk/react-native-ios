@@ -24,7 +24,6 @@ export default StyleSheet.create({
   },
   searchInput: {
     paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.sm,
     paddingLeft: (theme.spacing.sm + theme.spacing.xs) * 2 + 14,
     paddingRight: theme.spacing.sm * 2 + theme.spacing.xs + 12,
     backgroundColor: theme.colors.white.white15,

@@ -9,12 +9,7 @@ import styles from "./LeftSearchContent.styles";
 export default function LeftSearchContent() {
   return (
     <>
-      <View style={styles.searchContainer}>
-        <AnimatedInput />
-        <Pressable style={styles.cancelButton}>
-          <Text style={styles.cancelText}>Cancel</Text>
-        </Pressable>
-      </View>
+      <AnimatedInput />
       <View style={styles.appsContainer}>
         <View style={styles.row}>
           <WidgetItem />

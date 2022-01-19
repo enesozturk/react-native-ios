@@ -1,39 +1,42 @@
 import { StyleSheet } from "react-native";
 
 import theme from "@react-native-ios/constants/theme";
+import { SCREEN_WIDTH } from "@react-native-ios/constants/ui";
 
 export default StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    marginBottom: theme.spacing.lg,
+    paddingHorizontal: 56 / 2 - 8,
   },
   contentContainer: {
-    flex: 1,
-    paddingVertical: theme.spacing.xl,
-    borderRadius: theme.spacing.md,
-    backgroundColor: theme.colors.white.white15,
+    width: SCREEN_WIDTH - theme.spacing.lg,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
     position: "relative",
-  },
-  inputContainer: {
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "red",
+    backgroundColor: theme.colors.white.white25,
   },
   input: {
     paddingHorizontal: theme.spacing.sm,
+    paddingRight: 36,
     color: theme.colors.white.white75,
     ...theme.font.body,
   },
+  searchIconContainer: {
+    position: "absolute",
+  },
+  michrophoneIconContainer: {
+    position: "absolute",
+    right: 0,
+  },
   cancelText: {
     ...theme.font.body,
+    textAlignVertical: "center",
     color: theme.colors.white.white50,
-    position: "absolute",
-    right: -52,
+    height: "100%",
+    paddingVertical: theme.spacing.sm13,
   },
 });

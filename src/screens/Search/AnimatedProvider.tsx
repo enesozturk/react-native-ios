@@ -103,27 +103,25 @@ export default function AnimatedProvider({
   };
 
   return (
-    <>
-      <AnimatedBlurView
-        tint="dark"
-        animatedProps={animatedBlurBackdropProps}
-        style={[styles.blurBackdrop, animatedBlurBackdropStyles]}
-      >
-        <TapGestureHandler numberOfTaps={1} onEnded={handleTapOutside}>
-          <View style={styles.container}>
-            <Animated.View
-              style={[
-                styles.contentContainer,
-                { marginTop: top + theme.spacing.sm },
-                animatedContentStyles,
-              ]}
-            >
-              {children}
-            </Animated.View>
-          </View>
-        </TapGestureHandler>
-      </AnimatedBlurView>
-    </>
+    <AnimatedBlurView
+      tint="dark"
+      animatedProps={animatedBlurBackdropProps}
+      style={[styles.blurBackdrop, animatedBlurBackdropStyles]}
+    >
+      <TapGestureHandler numberOfTaps={1} onEnded={handleTapOutside}>
+        <View style={styles.container}>
+          <Animated.View
+            style={[
+              styles.contentContainer,
+              { paddingTop: top + theme.spacing.sm },
+              animatedContentStyles,
+            ]}
+          >
+            {children}
+          </Animated.View>
+        </View>
+      </TapGestureHandler>
+    </AnimatedBlurView>
   );
 }
 

@@ -17,6 +17,7 @@ export default {
   spacing: {
     xs: 4,
     sm: 7,
+    sm13: 13,
     md: 16,
     lg: 24,
     xl: 32,
