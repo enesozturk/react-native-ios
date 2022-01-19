@@ -46,7 +46,7 @@ export default StyleSheet.create({
   appsContainer: {
     display: "flex",
     flexDirection: "column",
-    padding: theme.spacing.lg,
+    padding: theme.spacing.lg + 4,
     width: "100%",
     backgroundColor: "transparent",
     overflow: "hidden",
@@ -55,6 +55,5 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: theme.spacing.lg,
   },
 });
