@@ -11,5 +11,6 @@ export default StyleSheet.create({
     borderRadius: theme.spacing.lg,
     backgroundColor: theme.colors.white.white25,
     overflow: "hidden",
+    marginBottom: theme.spacing.lg,
   },
 });
