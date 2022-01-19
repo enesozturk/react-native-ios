@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     display: "flex",
     flexDirection: "column",
+    paddingHorizontal: theme.spacing.sm,
   },
   blurBackdrop: {
     width: SCREEN_WIDTH,

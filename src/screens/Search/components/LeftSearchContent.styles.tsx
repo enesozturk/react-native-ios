@@ -7,7 +7,7 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.lg - theme.spacing.sm,
   },
   searchInputContainer: {
     flex: 1,
@@ -47,6 +47,7 @@ export default StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     padding: theme.spacing.lg + 4,
+    paddingHorizontal: theme.spacing.lg - theme.spacing.sm,
     width: "100%",
     backgroundColor: "transparent",
     overflow: "hidden",
