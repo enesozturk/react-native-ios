@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import {
   Extrapolate,
   interpolate,
@@ -13,18 +11,15 @@ import {
   SNAP_POINTS_HORIZONTAL,
 } from "@react-native-ios/constants/animation";
 import theme from "@react-native-ios/constants/theme";
-import useSwipeableProviderGesture from "./useSwipeableProviderGesture";
+
+import useGestureHandler from "./useGestureHandler";
 
 const useSwipeableProvider = () => {
   const { top } = useSafeAreaInsets();
   const offsetY = useSharedValue(0);
   const offsetX = useSharedValue(0);
   const startX = useSharedValue(0);
-  const direction = useSharedValue(0); // 0: horizontal, 1: vertical
-  const isSearchActive = useSharedValue(0);
-  const { swipeableProviderGesture } = useSwipeableProviderGesture({
-    direction,
-    isSearchActive,
+  const { swipeableProviderGesture } = useGestureHandler({
     offsetY,
     offsetX,
     startX,
@@ -89,8 +84,6 @@ const useSwipeableProvider = () => {
     offsetY,
     offsetX,
     startX,
-    direction,
-    isSearchActive,
     animatedStyles,
     animatedPageContainerStyles,
     animatedPagesContainerStyles,

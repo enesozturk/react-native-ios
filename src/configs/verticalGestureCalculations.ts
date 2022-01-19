@@ -10,28 +10,27 @@ import {
 
 type handleOnUpdateVerticalProps = {
   e: PanGestureHandlerEventPayload;
-  isSearchActive: SharedValue<number>;
   offsetY: SharedValue<number>;
 };
 
 export const handleOnEndVertical = ({
   e,
-  isSearchActive,
   offsetY,
 }: handleOnUpdateVerticalProps) => {
   "worklet";
 
+  const velocity = Math.abs(e.velocityY);
+  const translation = Math.abs(e.translationY);
+
   if (
-    e.velocityY > MIN_VELOCITY_Y_TO_ACTIVATE &&
-    e.translationY < DISTANCE_TO_ACTIVATE
+    translation > DISTANCE_TO_ACTIVATE ||
+    velocity > MIN_VELOCITY_Y_TO_ACTIVATE
   ) {
     offsetY.value = withSpring(MAX_OFFSET_TO_ANIMATE, {
       ...SPRING_CONFIG,
-      velocity: e.velocityY,
+      overshootClamping: false,
+      velocity,
     });
-  } else if (e.translationY >= DISTANCE_TO_ACTIVATE) {
-    isSearchActive.value = 1;
-    offsetY.value = withSpring(MAX_OFFSET_TO_ANIMATE, SPRING_CONFIG);
   } else {
     offsetY.value = withSpring(0, SPRING_CONFIG);
   }

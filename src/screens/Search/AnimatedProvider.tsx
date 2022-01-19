@@ -9,6 +9,7 @@ import Animated, {
   SharedValue,
   useAnimatedProps,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,35 +19,46 @@ const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
 import {
   BLUR_VIEW_MAX_INTENSITY,
   MAX_OFFSET_TO_ANIMATE,
+  SNAP_POINTS_HORIZONTAL,
   SPRING_CONFIG,
 } from "@react-native-ios/constants/animation";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@react-native-ios/constants/ui";
 import theme from "@react-native-ios/constants/theme";
 
 type AnimatedProviderProps = {
-  isSearchActive: SharedValue<number>;
-  offsetY: SharedValue<number>;
+  startPoint: number;
+  snapPoint: number;
+  direction: "left" | "right" | "vertical";
+  offset: SharedValue<number>;
+  start?: SharedValue<number>;
   children: React.ReactNode;
 };
 
 export default function AnimatedProvider({
-  isSearchActive,
-  offsetY,
+  startPoint = 0,
+  snapPoint = 0,
+  direction,
+  offset,
+  start,
   children,
 }: AnimatedProviderProps) {
   const { top } = useSafeAreaInsets();
+  const direMultiply = useSharedValue(direction == "right" ? -1 : 1);
 
   const animatedBlurBackdropStyles = useAnimatedStyle(() => {
     return {
-      zIndex: isSearchActive.value === 1 ? 10 : offsetY.value > 1 ? 10 : -1,
+      zIndex:
+        offset.value * direMultiply.value > startPoint * direMultiply.value
+          ? 10
+          : -1,
     };
   });
 
   const animatedBlurBackdropProps = useAnimatedProps(() => {
     return {
       intensity: interpolate(
-        offsetY.value,
-        [0, MAX_OFFSET_TO_ANIMATE],
+        offset.value * direMultiply.value,
+        [startPoint * direMultiply.value, snapPoint * direMultiply.value],
         [0, BLUR_VIEW_MAX_INTENSITY],
         Extrapolate.CLAMP
       ),
@@ -55,20 +67,38 @@ export default function AnimatedProvider({
 
   const animatedContentStyles = useAnimatedStyle(
     () => ({
-      opacity: interpolate(
-        offsetY.value,
-        [MAX_OFFSET_TO_ANIMATE / 10, MAX_OFFSET_TO_ANIMATE / 2],
-        [0, 1],
-        Extrapolate.CLAMP
-      ),
-      transform: [{ translateY: offsetY.value - MAX_OFFSET_TO_ANIMATE }],
+      opacity:
+        direction == "vertical"
+          ? interpolate(
+              offset.value * direMultiply.value,
+              [startPoint * direMultiply.value, snapPoint * direMultiply.value],
+              [0, 1],
+              Extrapolate.CLAMP
+            )
+          : 1,
+      transform:
+        direction === "vertical"
+          ? [{ translateY: offset.value - MAX_OFFSET_TO_ANIMATE }]
+          : [
+              {
+                translateX: interpolate(
+                  offset.value * direMultiply.value,
+                  [
+                    startPoint * direMultiply.value,
+                    snapPoint * direMultiply.value,
+                  ],
+                  [SCREEN_WIDTH * (direction === "right" ? 1 : -1), 0],
+                  Extrapolate.CLAMP
+                ),
+              },
+            ],
     }),
-    [offsetY]
+    [offset]
   );
 
   const handleTapOutside = () => {
-    isSearchActive.value = 0;
-    offsetY.value = withSpring(0, SPRING_CONFIG);
+    offset.value = withSpring(startPoint, SPRING_CONFIG);
+    if (start) start.value = withSpring(startPoint, SPRING_CONFIG);
     Keyboard.dismiss();
   };
 
@@ -105,7 +135,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     display: "flex",
     flexDirection: "column",
-    paddingHorizontal: 8,
   },
   blurBackdrop: {
     width: SCREEN_WIDTH,

@@ -19,7 +19,6 @@ export default function SwipeableProvider({ pages }: SwipeableProviderProps) {
     offsetY,
     offsetX,
     startX,
-    isSearchActive,
     animatedStyles,
     animatedPageContainerStyles,
     animatedPagesContainerStyles,
@@ -28,7 +27,7 @@ export default function SwipeableProvider({ pages }: SwipeableProviderProps) {
 
   return (
     <>
-      <Search {...{ isSearchActive, offsetY }} />
+      <Search {...{ offsetY }} />
       <LeftSearch {...{ offsetX, startX }} />
       <RightSearch {...{ offsetX, startX }} />
       <GestureDetector gesture={swipeableProviderGesture}>

@@ -1,5 +1,5 @@
 import { PanGestureHandlerEventPayload } from "react-native-gesture-handler";
-import { SharedValue } from "react-native-reanimated";
+import { cancelAnimation, SharedValue } from "react-native-reanimated";
 
 import { handleOnEndHorizontal } from "@react-native-ios/configs/horizontalGestureCalculations";
 import { handleOnEndVertical } from "@react-native-ios/configs/verticalGestureCalculations";
@@ -7,13 +7,13 @@ import { handleOnEndVertical } from "@react-native-ios/configs/verticalGestureCa
 type GestureHandlerStartProps = {
   direction: SharedValue<number>;
   e: PanGestureHandlerEventPayload;
+  startX: SharedValue<number>;
 };
 
 type GestureHandlerProps = {
   direction: SharedValue<number>;
   e: PanGestureHandlerEventPayload;
-  isSearchActive: SharedValue<number>;
-  offsetY: SharedValue<number>;
+  offsetY?: SharedValue<number>;
   startX: SharedValue<number>;
   offsetX: SharedValue<number>;
 };
@@ -21,8 +21,11 @@ type GestureHandlerProps = {
 export const handleGestureOnStart = ({
   e,
   direction,
+  startX,
 }: GestureHandlerStartProps) => {
   "worklet";
+
+  cancelAnimation(startX);
   direction.value = Math.abs(e.translationX) > Math.abs(e.translationY) ? 1 : 0;
 };
 
@@ -36,32 +39,34 @@ export const handleGestureOnUpdate = ({
   "worklet";
 
   if (direction.value) {
+    cancelAnimation(startX);
     offsetX.value = e.translationX + startX.value;
   } else {
-    offsetY.value = Math.max(0, e.translationY);
+    if (offsetY) offsetY.value = Math.max(0, e.translationY);
   }
 };
 
 export const handleGestureOnEnd = ({
   direction,
-  isSearchActive,
   offsetY,
   offsetX,
   startX,
   e,
-}: GestureHandlerProps) => {
+  destination,
+}: GestureHandlerProps & { destination: SharedValue<number> }) => {
   "worklet";
   if (direction.value) {
     handleOnEndHorizontal({
       e,
       startX,
       offsetX,
+      destination,
     });
   } else {
-    handleOnEndVertical({
-      e,
-      isSearchActive,
-      offsetY,
-    });
+    if (offsetY)
+      handleOnEndVertical({
+        e,
+        offsetY,
+      });
   }
 };

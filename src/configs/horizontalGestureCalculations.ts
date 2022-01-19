@@ -1,7 +1,12 @@
-import { SharedValue, withTiming } from "react-native-reanimated";
+import { SharedValue, withSpring } from "react-native-reanimated";
 import { PanGestureHandlerEventPayload } from "react-native-gesture-handler";
 
-import { SNAP_POINTS_HORIZONTAL } from "@react-native-ios/constants/animation";
+import {
+  MIN_VELOCITY_Y_TO_ACTIVATE,
+  SNAP_POINTS_HORIZONTAL_AS_ARRAY,
+  SPRING_CONFIG,
+} from "@react-native-ios/constants/animation";
+import { SCREEN_WIDTH } from "@react-native-ios/constants/ui";
 
 type handleOnUpdateHorizontalProps = {
   e: PanGestureHandlerEventPayload;
@@ -9,45 +14,65 @@ type handleOnUpdateHorizontalProps = {
   offsetX: SharedValue<number>;
 };
 
+const getNextSnapPoint = (offset: number) => {
+  "worklet";
+
+  let nextSnapPointAvailable = false;
+  let snapPoint = 0;
+
+  for (let i = 2; i < 10; i += 2) {
+    if (
+      offset <= SNAP_POINTS_HORIZONTAL_AS_ARRAY[i - 1] &&
+      offset >= SNAP_POINTS_HORIZONTAL_AS_ARRAY[i + 1]
+    ) {
+      snapPoint = SNAP_POINTS_HORIZONTAL_AS_ARRAY[i];
+      nextSnapPointAvailable = true;
+    }
+  }
+
+  return nextSnapPointAvailable ? snapPoint : -1;
+};
+
 export const handleOnEndHorizontal = ({
   e,
   startX,
   offsetX,
-}: handleOnUpdateHorizontalProps) => {
+}: handleOnUpdateHorizontalProps & {
+  destination: SharedValue<number>;
+}) => {
   "worklet";
 
-  const tX = e.translationX + startX.value;
+  const velocity = Math.abs(e.velocityX);
+  const direction = e.translationX < 0 ? "right" : "left";
+  const nextXValue =
+    direction === "right"
+      ? offsetX.value - SCREEN_WIDTH
+      : offsetX.value + SCREEN_WIDTH;
 
-  if (
-    tX > SNAP_POINTS_HORIZONTAL.FIRST_PAGE_HALF &&
-    tX < SNAP_POINTS_HORIZONTAL.LEFT_PAGE_HALF
-  ) {
-    offsetX.value = startX.value = withTiming(SNAP_POINTS_HORIZONTAL.ORIGIN, {
-      duration: 300,
-    });
-  } else if (
-    tX < SNAP_POINTS_HORIZONTAL.SECOND_PAGE_HALF &&
-    tX > SNAP_POINTS_HORIZONTAL.RIGHT_PAGE
-  ) {
-    offsetX.value = startX.value = withTiming(
-      SNAP_POINTS_HORIZONTAL.RIGHT_PAGE,
-      {
-        duration: 300,
-      }
-    );
-  } else if (tX > SNAP_POINTS_HORIZONTAL.LEFT_PAGE_HALF) {
-    offsetX.value = startX.value = withTiming(
-      SNAP_POINTS_HORIZONTAL.SECOND_PAGE * -1,
-      {
-        duration: 300,
-      }
-    );
+  startX.value = startX.value + e.translationX;
+
+  if (velocity > MIN_VELOCITY_Y_TO_ACTIVATE) {
+    const nextSnapPoint = getNextSnapPoint(nextXValue);
+    if (nextSnapPoint !== -1) {
+      offsetX.value = withSpring(nextSnapPoint, {
+        ...SPRING_CONFIG,
+        velocity,
+      });
+      startX.value = withSpring(nextSnapPoint, {
+        ...SPRING_CONFIG,
+        velocity,
+      });
+    }
   } else {
-    offsetX.value = startX.value = withTiming(
-      SNAP_POINTS_HORIZONTAL.SECOND_PAGE,
-      {
-        duration: 300,
-      }
-    );
+    const nextSnapPoint2 = getNextSnapPoint(offsetX.value + e.translationX);
+    console.log("else", nextSnapPoint2);
+    offsetX.value = withSpring(nextSnapPoint2, {
+      ...SPRING_CONFIG,
+      velocity,
+    });
+    startX.value = withSpring(nextSnapPoint2, {
+      ...SPRING_CONFIG,
+      velocity,
+    });
   }
 };
