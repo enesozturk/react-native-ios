@@ -58,4 +58,36 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  center: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+  },
+  column: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    height: "100%",
+    width: "100%",
+    position: "relative",
+    padding: 24,
+  },
+  linkIconContainer: {
+    position: "absolute",
+    right: 16,
+    bottom: 16,
+  },
+  textBody: {
+    ...theme.font.body,
+    color: theme.colors.white.white50,
+  },
+  textBodySecondary: {
+    marginLeft: 8,
+    ...theme.font.body,
+    color: theme.colors.white.white75,
+  },
 });

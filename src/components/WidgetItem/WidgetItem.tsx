@@ -4,12 +4,13 @@ import { View } from "react-native";
 import { BlurView } from "expo-blur";
 import { TapGestureHandler } from "react-native-gesture-handler";
 
-import { WIDGET_SQUARE_SIZE, WIDGET_WIDE_SIZE } from "./WidgetItem.constants";
+import { WIDGET_SQUARE_SIZE } from "./WidgetItem.constants";
 import styles from "./WidgetItem.styles";
 
 type WidgetItemProps = {
   children?: React.ReactNode;
   containerStyles?: object;
+  onPress?: () => void;
   wide?: boolean;
 };
 
@@ -17,9 +18,10 @@ export default function WidgetItem({
   children,
   containerStyles,
   wide,
+  onPress,
 }: WidgetItemProps) {
   return (
-    <TapGestureHandler onEnded={() => {}}>
+    <TapGestureHandler onEnded={onPress}>
       <View
         style={[
           styles.container,
