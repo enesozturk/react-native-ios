@@ -27,7 +27,7 @@ const useAnimatedInput = () => {
       height: interpolate(
         active.value,
         [0, 1],
-        [22 + 26, 22 + 16], // 48 - 24 24/2 14, 38-20 18/2 7
+        [22 + 26, 22 + 12], // 48 - 24 24/2 14, 38-20 18/2 7
         Extrapolate.CLAMP
       ),
       width: interpolate(
@@ -64,21 +64,25 @@ const useAnimatedInput = () => {
       marginLeft: interpolate(
         active.value,
         [0, 1],
-        [INPUT_WIDTH / 2 - 30, (theme.spacing.sm + theme.spacing.xs) * 2 + 14],
+        [INPUT_WIDTH / 2 - 30, (theme.spacing.sm + theme.spacing.xs) * 2 - 2],
         Extrapolate.CLAMP
       ),
-      fontSize: interpolate(
+      marginBottom: interpolate(
         active.value,
         [0, 1],
-        [theme.font.title2.fontSize, theme.font.body.fontSize],
+        [4, 2],
         Extrapolate.CLAMP
       ),
-      lineHeight: interpolate(
-        active.value,
-        [0, 1],
-        [theme.font.title2.lineHeight, theme.font.body.lineHeight],
-        Extrapolate.CLAMP
-      ),
+      transform: [
+        {
+          scale: interpolate(
+            active.value,
+            [0, 1],
+            [1, 0.84],
+            Extrapolate.CLAMP
+          ),
+        },
+      ],
     }),
     []
   );
@@ -93,11 +97,11 @@ const useAnimatedInput = () => {
   const animatedSearchIconStyles = useAnimatedStyle(
     () => ({
       opacity: 1,
-      top: interpolate(active.value, [0, 1], [12, 7], Extrapolate.CLAMP),
+      top: interpolate(active.value, [0, 1], [12, 8], Extrapolate.CLAMP),
       left: interpolate(
         active.value,
         [0, 1],
-        [INPUT_WIDTH / 2 - 30 - 32, 14],
+        [INPUT_WIDTH / 2 - 30 - 32, 8],
         Extrapolate.CLAMP
       ),
     }),
@@ -106,8 +110,8 @@ const useAnimatedInput = () => {
 
   const animatedSearchIconProps = useAnimatedStyle(
     () => ({
-      width: interpolate(active.value, [0, 1], [24, 20], Extrapolate.CLAMP),
-      height: interpolate(active.value, [0, 1], [24, 20], Extrapolate.CLAMP),
+      width: interpolate(active.value, [0, 1], [20, 18], Extrapolate.CLAMP),
+      height: interpolate(active.value, [0, 1], [20, 18], Extrapolate.CLAMP),
     }),
     []
   );
@@ -115,7 +119,7 @@ const useAnimatedInput = () => {
   const animatedMicIconStyles = useAnimatedStyle(
     () => ({
       opacity: active.value,
-      top: interpolate(active.value, [0, 1], [14, 7], Extrapolate.CLAMP),
+      top: interpolate(active.value, [0, 1], [14, 8], Extrapolate.CLAMP),
     }),
     []
   );

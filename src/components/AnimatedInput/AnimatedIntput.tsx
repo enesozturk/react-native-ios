@@ -49,12 +49,15 @@ export default function AnimatedIntput() {
             <Animated.View
               style={[styles.searchIconContainer, animatedSearchIconStyles]}
             >
-              <AnimatedSearchIcon animatedProps={animatedSearchIconProps} />
+              <AnimatedSearchIcon
+                animatedProps={animatedSearchIconProps}
+                fill={theme.colors.white.white50}
+              />
             </Animated.View>
             <Animated.View
               style={[styles.michrophoneIconContainer, animatedMicIconStyles]}
             >
-              <MichrophoneSVG height={20} />
+              <MichrophoneSVG height={18} fill={theme.colors.white.white50} />
             </Animated.View>
             <AnimatedTextInput
               ref={inputRef}

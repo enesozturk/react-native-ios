@@ -23,7 +23,7 @@ export default StyleSheet.create({
     paddingHorizontal: theme.spacing.sm,
     paddingRight: 36,
     color: theme.colors.white.white75,
-    ...theme.font.body,
+    ...theme.font.title2,
   },
   searchIconContainer: {
     position: "absolute",
