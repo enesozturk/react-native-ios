@@ -2,8 +2,13 @@
   "expo": {
     "name": "react-native-ios",
     "slug": "react-native-ios",
-    "version": "1.0.0",
+    "privacy": "public",
+    "platforms": ["ios"],
+    "sdkVersion": "44.0.0",
+    "githubUrl": "https://github.com/enesozturk/react-native-ios",
+    "version": "1.0.2",
     "orientation": "portrait",
+    "owner": "enesozturk",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -15,7 +20,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.enesozturk.react-native-ios"
     },
     "android": {
       "adaptiveIcon": {
