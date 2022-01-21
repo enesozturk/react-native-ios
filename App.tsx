@@ -7,7 +7,7 @@ import Wallpaper from "@react-native-ios/components/Wallpaper";
 import Footer from "@react-native-ios/components/Footer/Footer";
 import SwipeableProvider from "@react-native-ios/components/SwipeableProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Page1, Page2 } from "@react-native-ios/screens/Home/Home";
+import { Page1, Page2 } from "@react-native-ios/screens/Home";
 
 export default function App() {
   return (
