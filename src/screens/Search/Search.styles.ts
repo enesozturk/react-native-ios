@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
   michrophoneIconContainer: {
     position: "absolute",
-    top: theme.spacing.sm,
+    top: 8,
     right: 12 + theme.spacing.sm,
   },
   searchInput: {

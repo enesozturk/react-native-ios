@@ -18,10 +18,18 @@ export default function SearchContent() {
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
           <View style={styles.searchIconContainer}>
-            <SearchSVG />
+            <SearchSVG
+              height={16}
+              width={16}
+              fill={theme.colors.white.white50}
+            />
           </View>
           <View style={styles.michrophoneIconContainer}>
-            <MichrophoneSVG />
+            <MichrophoneSVG
+              width={18}
+              height={18}
+              fill={theme.colors.white.white50}
+            />
           </View>
           <TextInput
             placeholder="Search"
